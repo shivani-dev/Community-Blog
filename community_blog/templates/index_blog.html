@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+	<div class="col-xs-12 ">
+		<h4>Latest Blogs</h4>
+	</div>
+	<br>	
+	<br>
+	<div class='col-xs-12'>
+		<ul class="list-group col-xs-12">
+		{% for blog_user_key,each_blog in blogs.items %}
+			<li class="list-group-item col-xs-12">
+				{% for blog_id_prev,blog_name_prev in each_blog.items %}
+					{% for blog_id,blog_name in blog_name_prev.items  %}
+					<a href='{% url "blog_details" blog_id_prev blog_id %}'>{{blog_name}}</a>
+					{% endfor %}
+				{% endfor %}		
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

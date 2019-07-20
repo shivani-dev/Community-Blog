@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.3.1/parallax.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <title>Community Blog</title>
+    <style>
+      @media (max-width:1025px) { 
+        .change_layout { 
+          float: left!important;
+        }
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <a class="navbar-brand" href="{% url 'index_blog' %}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Community Blog</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse pull-right" id="navbarNavDropdown" >
+                <ul class="navbar-nav change_layout pull-right">
+                    <!-- <form class="form-inline">
+                    <input class="form-control mr-lg-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form> -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index_blog' %}"><i class='glyphicon glyphicon-home'></i>&nbsp;Home</a>
+                  </li>
+                  {% if show_create_blog == 1 %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'add_new_blog' %}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Create New Blog</a>
+                    </li>
+                  {% endif %}
+                  {% if show_username != "" %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'new_or_existing_user' %}"><i class='glyphicon glyphicon-user'></i>&nbsp;{{show_username}}</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout_current_session' %}" onclick='javascript:logout_successfully()'>&nbsp;Logout&nbsp;<i class="glyphicon glyphicon-log-out"></i></a>
+                    </li>
+                  {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'new_or_existing_user' %}"><i class='glyphicon glyphicon-user'></i>&nbsp;LogIn</a>
+                    </li> 
+                  {% endif %}
+                </ul>
+              </div>
+            </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% block javascript %}
+    {% endblock %}
+</html>

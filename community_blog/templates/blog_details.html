@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="jumbotron col-xs-12" style='background-image: url("{% static "images/blog_background.jpg" %}");background-size: cover;'>
+		    <h1 class="pull-right" style="color:white">{{blog_name}}</h1>      
+		</div>
+	  	<p>{{blog_content}}</p>  
+	  	<br>
+	  	<br><br>
+	  	<div class="pull-right">-{{blog_owner}}</div>       
+	</div>
+{% endblock %}

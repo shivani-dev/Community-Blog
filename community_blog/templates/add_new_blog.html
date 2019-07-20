@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+			<div class="form-group">
+				<form name="create_blog" method="post" action="{% url 'add_new_blog' %}">
+					{% csrf_token %}
+					<br>
+					<label for="blog_name">Blog Name</label>
+					<input type="text" name="blog_name" value="" id="blog_name" class="form-control" placeholder="Enter Blog Name..." charset="utf-8"><br>
+					<label for="blog_content">Blog Content</label>
+					<textarea name="blog_content" id="blog_content" class="form-control" placeholder="Enter your Content..."></textarea><br>
+					<button class="btn btn-lg btn-success">Create Blog</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

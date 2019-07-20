@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+			<h4>Active Blogs</h4>
+			<br>
+			{% if not blogs.items %}
+				<h5>No Blogs added yet!!!</h5>
+			{% else %}
+				<ul class="list-group">
+					{% for blog_key_items,blog_val in blogs.items %}
+						{% for blog_key,blog_value in blog_val.items %}
+							<li class="list-group-item">
+								<div class="col-xs-6">{{blog_key}}</div>
+								<form name='delete_blog_form' id='delete_blog_form_{{forloop.parentloop.counter}}' method='post' action='{% url "delete_blog" user_id blog_key_items  %}'>
+									<input type="hidden" name="login_form" id="login_form" value=1>
+									<div class="col-xs-6"><span class="pull-right" style="cursor:pointer;"><a data-toggle="modal" data-target="#edit_blog_{{forloop.parentloop.counter}}"><i class="glyphicon glyphicon-pencil" title='Edit'></i></a>&nbsp;<a href='javascript:delete_blog({{forloop.parentloop.counter}})' id="delete_blog_{{forloop.parentloop.counter}}"><i class="glyphicon glyphicon-trash" title='Delete'></i><input type='hidden' name='delete_each_blog' id='delete_each_blog' value='{{blog_key_items}}'>{% csrf_token %}</a></span></div>
+								</form>
+							</li>
+							<div class="col-xs-12">
+							  	<div class="modal fade" id="edit_blog_{{forloop.parentloop.counter}}" role="dialog">
+								  	<form name='edit_blog_form.{{forloop.parentloop.counter}}' action='{% url "edit_blog_items" user_id blog_key_items %}' method='post'>
+									    <div class="modal-dialog">
+									      <div class="modal-content">
+									        <div class="modal-header">
+									        	<h4 class="modal-title pull-left">Edit Blog Content</h4>
+									          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+									        </div>
+									        <div class="modal-body">
+									        	<div class="form-group">
+										          	<label for="blog_name">Blog Name</label>
+													<input type="text" name="blog_name" value="{{blog_key}}" id="blog_name" class="form-control" placeholder="Enter Blog Name..." charset="utf-8"><br>
+													<label for="blog_content">Blog Content</label>
+													<textarea name="blog_content" id="blog_content" class="form-control" placeholder="Enter your Content...">{{blog_value}}</textarea>{% csrf_token %}<br>
+												</div>
+									        </div>
+									        <div class="modal-footer">
+									        	<button type="submit" class="btn btn-success">Submit</button>
+									          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									        </div>
+									      </div>
+										</div>
+									</form>
+							  	</div>
+							</div>
+						{% endfor %}
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+{% block javascript %}
+	<script type="text/javascript">
+		function delete_blog(id) {
+			$("#delete_blog_form_"+id).submit()
+		}
+	</script>
+{% endblock %}

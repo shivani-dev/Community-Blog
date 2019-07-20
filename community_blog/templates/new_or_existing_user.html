@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+			<div class="col-md-6 col-sm-6 col-xs-6" id='login_portal'>
+				<button class="btn btn-success btn-lg pull-right" onclick="javascript:login_function()" id='login_button'>LogIn</button>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6" id="register_portal">
+				<button class="btn btn-success btn-lg"  onclick="javascript:register_function()" id='register_button'>Register</button>
+
+			</div>
+			{% if wrong_credentials == 1 %}
+				<h4 style="color: maroon">Note:Please Enter correct Credentials.</h4>
+				<br>
+			{% endif %}
+			<div id="login_form" style="display:none">
+				<h3>LogIn Yourself</h3>
+				<br>
+				<form name="login" method="post" action="{% url 'new_or_existing_user' %}">
+					<div class="form-group">
+						<label for="user_name">Username</label>
+						<input type="text" name="user_name" id="user_name" class="form-control" placeholder="Shivani.Sharma"><br>
+						<label for="user_passwrd">Password</label>
+						<input type="password" name="user_passwrd" id="user_passwrd" class="form-control">
+						<input type="hidden" name="login_form" id="login_form" class="form-control" value=1>
+						{% csrf_token %}
+						<br>
+						<button class="btn btn-success btn-lg">LogIn</button>
+					</div>
+				</form>
+			</div>
+			<div id="register_form" style="display:none;">
+				<form name="register" method="post" action="{% url 'new_or_existing_user' %}">
+					{% csrf_token %}
+					<h3>Register Yourself</h3>
+					<br>
+					<div class="form-group">
+						<label for="first_name">First Name</label>
+						<input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter First Name..."><br>
+						<input type="hidden" name="login_form" id="login_form" class="form-control" value=0>
+						<label for="last_name">Last Name</label>
+						<input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter Last Name..."><br>
+						<label for="user_name">Username</label>
+						<input type="text" name="user_name" id="user_name" class="form-control" placeholder="example: Shivani.Sharma"><br>
+						<label for="user_password">Set Password</label>
+						<input type="password" name="user_password" id="user_password" class="form-control" placeholder="Choose your password...">
+						<br>
+						<label for="user_confirm_password">Confirm Password</label>
+						<input type="password" name="user_confirm_password" id="user_confirm_password" class="form-control" placeholder="Confirm your password...">
+						<br>
+						<button class="btn btn-success btn-lg">Register</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascript %}
+		<script type="text/javascript">
+			function login_function() { 
+				$("#login_button").hide();
+				$("#register_button").hide();
+				$("#login_form").show();
+			}
+			function register_function() { 
+				$("#login_button").hide();
+				$("#register_button").hide();
+				$("#register_form").show();
+			}
+		</script>
+{% endblock %}
